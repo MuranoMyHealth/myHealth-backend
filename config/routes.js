@@ -55,5 +55,5 @@ module.exports.routes = {
   //  ║║║║╚═╗║
   //  ╩ ╩╩╚═╝╚═╝
 
-
+  //s'POST /notification/push': { action: 'push', controller: 'notification' }
 };
