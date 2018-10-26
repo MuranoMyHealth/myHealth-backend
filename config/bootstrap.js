@@ -12,7 +12,7 @@
 const moment = require('moment');
 const schedule = require('node-schedule');
 
-module.exports.bootstrap = function(done) {
+module.exports.bootstrap = async function(done) {
 
   sails.log.debug("bootstrap ..");
 
