@@ -9,13 +9,7 @@
  * https://sailsjs.com/config/bootstrap
  */
 
-const moment = require('moment');
-const schedule = require('node-schedule');
-
-module.exports.bootstrap = async function(done) {
-
-  sails.log.debug("bootstrap ..");
-
+ module.exports.bootstrap = async function(done) {
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:
@@ -33,38 +27,7 @@ module.exports.bootstrap = async function(done) {
   // ```
 
   // Don't forget to trigger `done()` when this bootstrap function's logic is finished.
-  // (otherwise your server will never lift, since it's waiting on the bootstrap) 
-
-  /*
-    *    *    *    *    *    *
-    ┬    ┬    ┬    ┬    ┬    ┬
-    │    │    │    │    │    │
-    │    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
-    │    │    │    │    └───── month (1 - 12)
-    │    │    │    └────────── day of month (1 - 31)
-    │    │    └─────────────── hour (0 - 23)
-    │    └──────────────────── minute (0 - 59)
-    └───────────────────────── second (0 - 59, OPTIONAL)
-  */
-
-  //TODO: Из репозитория время след. сессии, далее с интервалом
-  const jobIntervalSec = sails.config.custom.jobIntervalSec;
-  // Время от 0 часов
-  //var nowTime = moment().utc().toDate();
-  const startJobDate = moment().utc().toDate();
-  //const dayUtcSeconds = 67657657;
-  //Math.floor(dayUtcSeconds / jobIntervalSec) * jobIntervalSec + jobIntervalSec;
-
-  sails.scheduledJob = schedule.scheduleJob({ 
-    start: Date.now(), 
-    rule: `*/${jobIntervalSec} * * * * *`
-  }, 
-  async function() {
-    sails.log.debug("Scheduled job executed ...");    
-    await Notificator.do();
-    sails.log.debug("Scheduled job is completed.");
-    sails.log.debug("___________________________");
-  });
-
+  // (otherwise your server will never lift, since it's waiting on the bootstrap)   
+  await Notificator.load();
   return done();
 };
