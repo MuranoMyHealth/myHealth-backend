@@ -55,5 +55,6 @@ module.exports.routes = {
   //  ║║║║╚═╗║
   //  ╩ ╩╩╚═╝╚═╝
 
-
+  'POST /notification/subscribe': { action: 'subscribe', controller: 'notification' },
+  'POST /notification/unsubscribe': { action: 'unsubscribe', controller: 'notification' }
 };
