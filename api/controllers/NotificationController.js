@@ -58,7 +58,7 @@ module.exports = {
     },
     update: async function(req, res) {
         try {
-            const entity = await Subscriber.update({token: token.body.token}
+            const entity = await Subscriber.update({token: req.body.token}
                 ,{
                 from: req.body.from,
                 to: req.body.to,
