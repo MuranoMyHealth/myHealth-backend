@@ -71,6 +71,7 @@ module.exports = {
 
         sails.log.debug(`Subscribed the client with token ${token}.`);
         sails.plan[subscriber.timezone].subscribers[token] = subscriber.id;
+        PushNotification.subscribe(token);
     },
 
     unset: function(subscriber) {
@@ -79,7 +80,8 @@ module.exports = {
 
         const schedule = sails.plan[subscriber.timezone];
         if (!!schedule && !!schedule.subscribers[token]) {
-            delete schedule.subscribers[token];
+            PushNotification.unsubscribe(token);
+            delete schedule.subscribers[token];            
             const count = Object.keys(schedule.subscribers).length;
             if (count === 0) {
                 schedule.job.cancel();
