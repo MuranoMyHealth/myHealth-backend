@@ -6,9 +6,9 @@ const vapidKeys = {
 };
 
 module.exports = {
-    push: function(message, done) {
-
-        sails.log.info("Push: " + JSON.stringify(message));
+    push: function(token, message) {
+        sails.log.info("Push to " + token + ', ' + JSON.stringify(message));
+        
         //TODO: ...
     }
 };
