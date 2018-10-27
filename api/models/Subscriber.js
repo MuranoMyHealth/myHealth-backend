@@ -6,16 +6,19 @@
  */
 
 module.exports = {
-  
+
   attributes: {
     token: { type: 'string', required: true, unique: true },
     /**
      * Subscriber timezone in minutes
      */
     timezone: { type: 'number', required: true },
-
-    pushSubscription: { type: 'json', required: true }
+    
+    from: { type: 'number' },
+    to: { type: 'number' },
+    silenceMode : {type: 'boolean'},
+    pushSubscription: { type: 'json' },
+    isSubscribed: {type:'boolean'}
   },
-
 };
 
