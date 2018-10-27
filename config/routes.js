@@ -57,5 +57,5 @@ module.exports.routes = {
 
   'POST /notification/logon': { action: 'logon', controller: 'notification' },
   'POST /notification/subscribe/:token': { action: 'subscribe', controller: 'notification' },
-  'POST /notification/logoff': { action: 'unsubscribe', controller: 'notification' }
+  'POST /notification/logoff': { action: 'logoff', controller: 'notification' }
 };
