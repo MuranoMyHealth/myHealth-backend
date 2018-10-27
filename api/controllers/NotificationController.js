@@ -17,7 +17,7 @@ module.exports = {
                 .set({pushSubcription: pushSubcription})
                 .fetch();
             if (!!entity) {
-                Notificator.set(entity);            
+                PushNotification.subscribe(pushSubscription, token);        
                 res.ok(entity);
             } else {
                 res.notFound();
@@ -46,6 +46,7 @@ module.exports = {
                 token: req.body.token
             }).fetch();
             if (entities.length === 1) {
+                PushNotification.unsubscribe(token);
                 Notificator.unset(entities[0]);
                 res.ok(entities[0]);
             } else {

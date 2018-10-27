@@ -11,12 +11,10 @@ module.exports = {
             sails.subs = { };
         } 
         sails.log.info(`Token ${token} subscribed to push notification.`);
-        sails.subs[token] = pushSubscription;
-        PushNotification.subscribe(pushSubscription, token);
+        sails.subs[token] = pushSubscription;       
     },
 
-    unsubscribe: function(token) {
-        PushNotification.unsubscribe(token);
+    unsubscribe: function(token) {        
         if(sails.subs !== undefined && sails.subs[token] !== undefined) {
             delete sails.subs[token];
         }
