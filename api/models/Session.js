@@ -8,8 +8,8 @@
 module.exports = {
 
   attributes: {
-    order: { type: 'number', required: true, unique: true},
-    name: { type: 'string', required: true, unique: true }
+    hour: { type: 'number', required: true, unique: true},
+    list: { collection: 'exec' }
   },
 
 };

@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-    name: { type: 'string', required: true, unique: true }
+    name: { type: 'string', required: true, unique: true },
+    imgUrl: { type: 'string' },
+    instructions: { type: 'string' },
+    duration: { type: 'number' },
   },
 
 };
