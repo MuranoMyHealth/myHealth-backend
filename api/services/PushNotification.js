@@ -3,7 +3,7 @@ const webpush = require('web-push');
 const publicKey = "BOGDs4PHqDZsr8cElNDyir-7rcJ57QEuRd0oOwR0ASUgnk5hg5HJ_1lqOncRElRXVdRh99ZlUkAXtnYthAJdtOU";
 const privateKey = "Nb8ONaRycdNXoFbdy60xeGQz0FqVrkDBBhzaBwEf3bU";
 
-webpush.setVapidDetails('myHealth', publicKey, privateKey);
+webpush.setVapidDetails('mailto:myhealth@gmail.com', publicKey, privateKey);
 
 module.exports = {
     subscribe: function(pushSubscription, token) {
