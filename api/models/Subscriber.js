@@ -13,12 +13,12 @@ module.exports = {
      * Subscriber timezone in minutes
      */
     timezone: { type: 'number', required: true },
-
-    pushSubscription: { type: 'json', required: true },
     
     from: { type: 'number' },
     to: { type: 'number' },
-    slientMode : {type: 'boolean'}
+    slientMode : {type: 'boolean'},
+    pushSubscription: { type: 'json' },
+    isSubscribed: {type:'boolean'}
   },
 };
 
