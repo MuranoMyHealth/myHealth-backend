@@ -9,12 +9,12 @@ module.exports = {
     subscribe: function(pushSubscription, token) {
         if(sails.subs === undefined) {
             sails.subs = { };
-        } 
+        }
         sails.log.info(`Token ${token} subscribed to push notification.`);
-        sails.subs[token] = pushSubscription;       
+        sails.subs[token] = pushSubscription;
     },
 
-    unsubscribe: function(token) {        
+    unsubscribe: function(token) {
         if(sails.subs !== undefined && sails.subs[token] !== undefined) {
             delete sails.subs[token];
         }
@@ -32,7 +32,7 @@ module.exports = {
         try {
             await webpush.sendNotification(pushSubscription, payload);
         } catch (err) {
-            sails.log.console.error(err);;      
+            sails.log.console.error(err);;
         }
     }
 };
