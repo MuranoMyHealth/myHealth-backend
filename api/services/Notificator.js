@@ -35,7 +35,7 @@ module.exports = {
 
         /* Current date and time in timezone */
         const nextHourToStart = getNextHour(timezone);
-        const rule = (staging ? '*/59 * * * * *' : '* * */1 * * *');
+        const rule = (staging ? '*/60 * * * * *' : '* * */1 * * *');
         sails.log.info(`Planned the new schedule, be started at ${nextHourToStart} for timezone ${timezone} (${rule}).`);
         const result = schedule.scheduleJob({ 
             start: nextHourToStart, 
