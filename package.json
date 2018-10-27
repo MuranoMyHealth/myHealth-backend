@@ -36,6 +36,6 @@
   "author": "anonymous node/sails user",
   "license": "",
   "engines": {
-    "node": ">=11.0"
+    "node": "6.11.1"
   }
 }
