@@ -9,10 +9,10 @@ module.exports = {
 
     subscribe: async function(req, res) {
         try {
-            const token = req.params.token;
+            const token = req.param('token');
             const pushSubscription = JSON.stringify(req.body);
 
-            sails.log.debug(pushSubscription);
+            sails.log.debug(token + ' | ' + pushSubscription);
 
             const entity = await Subscriber
                 .update({ token: token })
