@@ -1,6 +1,18 @@
 const moment = require('moment');
 const schedule = require('node-schedule');
 
+// Get next hour by local time with correct to timezone
+const getNextHour = function(timezone) {
+    let now = new Date();
+    let divMinutes = timezone - now.getTimezoneOffset();      
+    divMinutes = divMinutes - Math.floor(Math.abs(divMinutes) / 60) * 60;
+    let mNextHour = moment(
+        { y: now.getFullYear(), M: now.getMonth(), d: now.getDate(), h: now.getHours(), m: 0, s: 0, ms: 0 })
+            .add(60 + divMinutes, 'm');
+    let result = mNextHour.toDate();
+    return result;
+}
+
 module.exports = {
     load: async function() {
         sails.log.info('Load notificator...');
@@ -12,14 +24,10 @@ module.exports = {
 
     newSchedule: function(timezone) {
         /* Current date and time in timezone */
-        const now = moment().utc().add(timezone, 'm').toDate();
-        sails.log.info(`Planned the new schedule for timezone ${timezone}. Local time in this timezone at ${now.toISOString()}.`);
-
-        //TODO: Получаем время до следующего часа и запускаем расписание спустя это время с интервалом раз в час
-        const startTo = Date.now();
-
+        const nextHourToStart = getNextHour(timezone);
+        sails.log.info(`Planned the new schedule, be started at ${nextHourToStart.toISOString()} for timezone ${timezone}.`);
         const result = schedule.scheduleJob({ 
-            start: startTo, 
+            start: nextHourToStart, 
             /*
                 *    *    *    *    *    *
                 ┬    ┬    ┬    ┬    ┬    ┬
@@ -31,7 +39,7 @@ module.exports = {
                 │    └──────────────────── minute (0 - 59)
                 └───────────────────────── second (0 - 59, OPTIONAL)
             */
-            rule: '*/10 * * * * *' //TODO: 10 сек для тестов! '* * */1 * * *'
+            rule: '* * */1 * * *'
         }, 
         function(s) { Notificator.push(s); }
             .bind(null, timezone));
@@ -50,8 +58,7 @@ module.exports = {
             sails.plan[subscriber.timezone] = schedule;
         }
 
-        const subNow = moment().utc().add(subscriber.timezone, 'm').toDate();
-        sails.log.debug(`Subscribed the client with token ${token}, the local time ${subNow.toISOString()}`);
+        sails.log.debug(`Subscribed the client with token ${token}.`);
         sails.plan[subscriber.timezone].subscribers[token] = subscriber.id;
     },
 
@@ -74,13 +81,16 @@ module.exports = {
     push: function(timezone) {
         if (!!sails.plan[timezone]) {
             /* Current date and time in timezone */
-            const now = moment().utc().add(timezone, 'm').toDate();
+            let divMinutes = (new Date()).getTimezoneOffset() - timezone;    
+            const now = moment().add(divMinutes, 'm').toDate();
+
             const subscribers = sails.plan[timezone].subscribers;
             sails.log.info(`Push notification in timezone ${timezone}, now local time at ${now.toISOString()}.`);
             for(let token in subscribers) {
                 sails.log.debug(`Push notification to ${token} client token.`);
 
                 //TODO: Push notification by token ... 
+                // Если now - локальное время с учетом timezone, попадает в допустимый период
                 
             }
         }
