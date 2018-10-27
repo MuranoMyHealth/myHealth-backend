@@ -14,7 +14,7 @@ module.exports = {
      */
     timezone: { type: 'number', required: true },
 
-    pushSubscription: { type: 'json', required: true }
+    pushSubscription: { type: 'json' }
   },
 
 };
