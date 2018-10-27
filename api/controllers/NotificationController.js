@@ -12,12 +12,13 @@ module.exports = {
             const token = req.params.token;
             const pushSubscription = JSON.stringify(req.body);
 
+            sails.log.debug(pushSubscription);
+
             const entity = await Subscriber
                 .update({ token: token })
-                .set({ pushSubscription: JSON.stringify(pushSubscription) })
+                .set({ pushSubscription: pushSubscription })
                 .fetch();
             if (!!entity) {
-                PushNotification.subscribe(JSON.stringify(pushSubscription), token);
                 res.ok(entity);
             } else {
                 res.notFound();
@@ -29,10 +30,15 @@ module.exports = {
 
     logon: async function(req, res) {
         try {
-            const entity = await Subscriber.create({
+            const entity = await Subscriber.findOrCreate(
+              {
+                token: req.body.token
+              },
+              {
                 token: req.body.token,
                 timezone: req.body.timezone
-            }).fetch();
+              });
+
             Notificator.set(entity);
             res.ok(entity);
         } catch (err) {
@@ -46,7 +52,6 @@ module.exports = {
                 token: req.body.token
             }).fetch();
             if (entities.length === 1) {
-                PushNotification.unsubscribe(entities[0].token);
                 Notificator.unset(entities[0]);
                 res.ok(entities[0]);
             } else {
