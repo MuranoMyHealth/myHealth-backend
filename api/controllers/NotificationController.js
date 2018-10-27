@@ -11,7 +11,8 @@ module.exports = {
         try {
             const entity = await Subscriber.create({
                 token: req.body.token,
-                timezone: req.body.timezone
+                timezone: req.body.timezone,
+                pushSubscription: pushSubscription
             }).fetch();
             Notificator.set(entity);            
             res.ok(entity);

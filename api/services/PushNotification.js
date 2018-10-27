@@ -3,22 +3,14 @@ const webpush = require('web-push');
 const publicKey = "BOGDs4PHqDZsr8cElNDyir-7rcJ57QEuRd0oOwR0ASUgnk5hg5HJ_1lqOncRElRXVdRh99ZlUkAXtnYthAJdtOU";
 const privateKey = "Nb8ONaRycdNXoFbdy60xeGQz0FqVrkDBBhzaBwEf3bU";
 
-webpush.setVapidDetails('myHealth', vapidKeysPublicKey, vapidKeysPrivateKey);
+webpush.setVapidDetails('myHealth', publicKey, privateKey);
 
 module.exports = {
-    subscribe: function(token) {
+    subscribe: function(pushSubscription, token) {
         if(sails.subs === undefined) {
             sails.subs = { };
         } 
         sails.log.info(`Token ${token} subscribed to push notification.`);
-        //TODO: ...
-        const pushSubscription = {
-            endpoint: '.....',
-            keys: {
-              auth: '.....',
-              p256dh: '.....'
-            }
-        };
         sails.subs[token] = pushSubscription;
     },
 

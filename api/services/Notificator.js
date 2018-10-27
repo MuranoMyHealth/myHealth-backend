@@ -71,7 +71,7 @@ module.exports = {
 
         sails.log.debug(`Subscribed the client with token ${token}.`);
         sails.plan[subscriber.timezone].subscribers[token] = subscriber.id;
-        PushNotification.subscribe(token);
+        PushNotification.subscribe(subscriber.pushSubscription, token);
     },
 
     unset: function(subscriber) {

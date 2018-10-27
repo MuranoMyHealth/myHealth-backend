@@ -12,7 +12,9 @@ module.exports = {
     /**
      * Subscriber timezone in minutes
      */
-    timezone: { type: 'number', required: true }
+    timezone: { type: 'number', required: true },
+
+    pushSubscription: { type: 'json', required: true }
   },
 
 };
