@@ -61,7 +61,7 @@ module.exports = {
                 ,{
                 from: req.body.from,
                 to: req.body.to,
-                slientMode: req.body.slientMode
+                silenceMode: req.body.silenceMode
             }).fetch();           
             res.ok(entity);
         } catch (err) {

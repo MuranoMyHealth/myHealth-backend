@@ -16,7 +16,7 @@ module.exports = {
     
     from: { type: 'number' },
     to: { type: 'number' },
-    slientMode : {type: 'boolean'},
+    silenceMode : {type: 'boolean'},
     pushSubscription: { type: 'json' },
     isSubscribed: {type:'boolean'}
   },
