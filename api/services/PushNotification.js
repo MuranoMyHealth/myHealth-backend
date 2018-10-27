@@ -1,14 +1,38 @@
 
 const webpush = require('web-push');
-const vapidKeys = {
-    "publicKey":"BBHtHGBlXrT-FCeLBiBlPt3BZvdBDb5XVKrF_PofAdP-VLzOHeEC_X1M7foI3VScxRpOoio77A5Y_ukTuFp7jd4",
-    "privateKey":"J4L5ur4JBsfzi1KNTSZa2U1xBIuLTHnB4O3Ix8CzFh8"
-};
+const publicKey = "BOGDs4PHqDZsr8cElNDyir-7rcJ57QEuRd0oOwR0ASUgnk5hg5HJ_1lqOncRElRXVdRh99ZlUkAXtnYthAJdtOU";
+const privateKey = "Nb8ONaRycdNXoFbdy60xeGQz0FqVrkDBBhzaBwEf3bU";
+
+webpush.setVapidDetails('myHealth', publicKey, privateKey);
 
 module.exports = {
-    push: function(token, message) {
+    subscribe: function(pushSubscription, token) {
+        if(sails.subs === undefined) {
+            sails.subs = { };
+        } 
+        sails.log.info(`Token ${token} subscribed to push notification.`);
+        sails.subs[token] = pushSubscription;
+    },
+
+    unsubscribe: function(token) {
+        if(sails.subs !== undefined && sails.subs[token] !== undefined) {
+            delete sails.subs[token];
+        }
+    },
+
+    push: async function(token, message) {
+        const pushSubscription = sails.subs[token];
+        if (pushSubscription === undefined) {
+            sails.log.warn(`The token ${token} subscription to push notification not subscribed.`);
+            return;
+        }
+
         sails.log.info("Push to " + token + ', ' + JSON.stringify(message));
-        
-        //TODO: ...
+        const payload = JSON.stringify(message);
+        try {
+            await webpush.sendNotification(pushSubscription, payload);
+        } catch (err) {
+            sails.log.console.error(err);;      
+        }
     }
 };
