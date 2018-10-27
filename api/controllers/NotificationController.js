@@ -36,6 +36,19 @@ module.exports = {
             res.serverError(err);
         }
     }, 
+    update: async function(req, res) {
+        try {
+            const entity = await Subscriber.update({token: token.body.token}
+                ,{
+                from: req.body.from,
+                to: req.body.to,
+                slientMode: req.body.slientMode
+            }).fetch();           
+            res.ok(entity);
+        } catch (err) {
+            res.serverError(err);
+        }
+    },
 
 };
 

@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  
+
   attributes: {
     token: { type: 'string', required: true, unique: true },
     /**
@@ -14,8 +14,11 @@ module.exports = {
      */
     timezone: { type: 'number', required: true },
 
-    pushSubscription: { type: 'json', required: true }
+    pushSubscription: { type: 'json', required: true },
+    
+    from: { type: 'number' },
+    to: { type: 'number' },
+    slientMode : {type: 'boolean'}
   },
-
 };
 
