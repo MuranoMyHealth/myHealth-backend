@@ -30,19 +30,17 @@ module.exports = {
 
     logon: async function(req, res) {
         try {
-            const entity = await Subscriber.findOrCreate(
-              {
-                token: req.body.token
-              },
-              {
-                token: req.body.token,
-                timezone: req.body.timezone
-              });
+          const token = req.body.token;
+          const entity = await Subscriber
+            .findOrCreate({ token: token }, {
+              token: req.body.token,
+              timezone: req.body.timezone
+            });
 
-            Notificator.set(entity);
-            res.ok(entity);
+          Notificator.set(entity);
+          res.ok(entity);
         } catch (err) {
-            res.serverError(err);
+          res.serverError(err);
         }
     },
 
